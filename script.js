@@ -14,3 +14,19 @@ function subtract() {
     }
     return diff;
 }
+
+function multiply() {
+    let product = arguments[0];
+    for (let i = 1; i < arguments.length; i++) {
+        product *= arguments[i];
+    }
+    return product;
+}
+
+function divide() {
+    let quotient = arguments[0];
+    for (let i = 1; i < arguments.length; i++) {
+        quotient /= quotient[i];
+    }
+    return quotient
+}

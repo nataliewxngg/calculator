@@ -1,32 +1,31 @@
+// Variables
+let operation = "";
+
 // Functions
-function add() {
-    let sum = 0;
-    for (let i = 0; i < arguments.length; i++) {
-        sum += arguments[i]; 
-    }
-    return sum;
+function add(x,y) {
+    return x + y;
 }
 
-function subtract() {
-    let diff = 0;
-    for (let i = 0; i < arguments.length; i++) {
-        diff -= arguments[i];
-    }
-    return diff;
+function subtract(x,y) {
+    return x - y;
 }
 
-function multiply() {
-    let product = arguments[0];
-    for (let i = 1; i < arguments.length; i++) {
-        product *= arguments[i];
-    }
-    return product;
+function multiply(x,y) {
+    return x * y;
 }
 
-function divide() {
-    let quotient = arguments[0];
-    for (let i = 1; i < arguments.length; i++) {
-        quotient /= quotient[i];
+function divide(x,y) {
+    return x / y;
+}
+
+function operate(x, y, op) {
+    if (op == "+") {
+        return add(x, y);
+    } else if (op == "-") {
+        return subtract(x, y);
+    } else if (op == "*") {
+        return multiply(x, y);
+    } else {
+        return divide(x, y);
     }
-    return quotient
 }

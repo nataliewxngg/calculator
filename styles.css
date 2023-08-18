@@ -4,8 +4,27 @@ body {
 }
 
 * {
-    font-family: Arial, Helvetica, sans-serif;
     color: white;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+a {
+    margin: 20px;
+
+    color: #212529;
+    font-weight: 700;
+    font-size: 20px;
+    text-decoration: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+a img {
+    width: 30px;
+    height: auto;
 }
 
 #calculator {

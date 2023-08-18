@@ -1,6 +1,17 @@
 // Variables
+const DEFAULTBUTTONBG = "#495057";
+const NUMBUTTONBG = "#6c757d";
+const OPBUTTONBG = "#669bbc";
+const CLEARBUTTONBG = "#d62828";
+const EQUALBUTTONBG = "#57cc99";
+
 let operation = "";
+
 const buttons = document.querySelectorAll("button");
+const numButtons = document.querySelectorAll(".nums");
+const opButtons = document.querySelectorAll(".op");
+const clearButtons = document.querySelectorAll(".clear");
+const equalButton = document.querySelector(".equal");
 
 // Functions
 function add(x,y) {
@@ -31,7 +42,27 @@ function operate(x, y, op) {
     }
 }
 
-// Event Listeners
+// Event Listeners (HOVER)
+buttons.forEach((button) => {
+    button.onmouseover = () => button.style.transform = "scale(1.1)";
+    button.addEventListener("mouseout", () => {
+        button.style.transform = "scale(1)";
+        button.style.background = DEFAULTBUTTONBG;
+    })
+})
+
+numButtons.forEach((numButton) => {
+    numButton.onmouseover = () => numButton.style.background = NUMBUTTONBG;
+})
+opButtons.forEach((opButton) => {
+    opButton.onmouseover = () => opButton.style.background = OPBUTTONBG;
+})
+clearButtons.forEach((clearButton) => {
+    clearButton.onmouseover = () => clearButton.style.background = CLEARBUTTONBG;
+})
+equalButton.onmouseover = () => equalButton.style.background = EQUALBUTTONBG;
+
+// Event Listeners (CLICK)
 buttons.forEach((button) => {
     button.addEventListener("click", function (e) {
 
@@ -71,7 +102,7 @@ buttons.forEach((button) => {
             operation += "0";
         } else if (e.target.id == "decimal-button") {
             operation += ".";
-        } else {
+        } else { // equal button
             // do operations here
         }
 

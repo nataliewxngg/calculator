@@ -129,5 +129,11 @@ buttons.forEach((button) => {
         const h4 = document.createElement("h4");
         h4.innerText = operation;
         calculatorDisplay.appendChild(h4);
+
+        if (result != 0) {
+            const h1 = document.createElement("h1");
+            h1.innerText = result;
+            calculatorDisplay.appendChild(h1);
+        }
     })
 })

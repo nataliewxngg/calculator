@@ -69,6 +69,12 @@ equalButton.onmouseover = () => equalButton.style.background = EQUALBUTTONBG;
 buttons.forEach((button) => {
     button.addEventListener("click", function (e) {
 
+        // display operation on calculator display
+        calculatorDisplay.innerHTML = "";
+        const h4 = document.createElement("h4");
+        h4.innerText = operation;
+        calculatorDisplay.appendChild(h4);
+
         if (e.target.id == "all-clear-button") {
             operation = "";
         } else if (e.target.id == "clear-button") {
@@ -106,34 +112,42 @@ buttons.forEach((button) => {
         } else if (e.target.id == "decimal-button") {
             operation += ".";
         } else { // equal button
-            operation += " ";
+            operating = operation + " ";
+            
+            let x = operating.substring(0, operating.indexOf(" "));
+            operating = operating.substring(operating.indexOf(" ") + 1);
+            // console.log(x);
 
-            let x = operation.substring(0, operation.indexOf(" "));
-            operation = operation.substring(operation.indexOf(" ") + 1);
-            console.log(x);
+            let op = operating.substring(0, operating.indexOf(" "));
+            operating = operating.substring(operating.indexOf(" ") + 1);
+            // console.log(op);
 
-            let op = operation.substring(0, operation.indexOf(" "));
-            operation = operation.substring(operation.indexOf(" ") + 1);
-            console.log(op);
-
-            let y = operation.substring(0, operation.indexOf(" "));
-            operation = operation.substring(operation.indexOf(" ") + 1);
-            console.log(y)
+            let y = operating.substring(0, operating.indexOf(" "));
+            operating = operating.substring(operating.indexOf(" ") + 1);
+            // console.log(y);
 
             result = operate(x, y, op);
             console.log(result);
-        }
 
-        // display operation on calculator display
-        calculatorDisplay.innerHTML = "";
-        const h4 = document.createElement("h4");
-        h4.innerText = operation;
-        calculatorDisplay.appendChild(h4);
+            while (operating.length > 2) {
+                x = result;
+                
+                op = operating.substring(0, operating.indexOf(" "));
+                operating = operating.substring(operating.indexOf(" ") + 1);
 
-        if (result != 0) {
-            const h1 = document.createElement("h1");
-            h1.innerText = result;
-            calculatorDisplay.appendChild(h1);
+                y = operating.substring(0, operating.indexOf(" "));
+                operating.substring(operating.indexOf(" ") + 1);
+
+                result = operate(x, y, op);
+                console.log(result)
+            }
+
+            const h2 = document.createElement("h2");
+            h2.innerText = result.toString();
+            calculatorDisplay.appendChild(h2);
+
+            // operation = ""
+            operating = ""
         }
     })
 })

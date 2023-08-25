@@ -53,7 +53,15 @@ a img {
 }
 
 #calculator-display * {
-    padding: 5px;
+    margin: 0;
+}
+
+#calculator-display h4 {
+    padding: 5px 5px 0 0;
+}
+
+#calculator-display h2 {
+    padding: 0 5px 0 0;
 }
 
 button {

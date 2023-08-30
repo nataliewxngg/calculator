@@ -47,7 +47,9 @@ function operate(x, y, op) {
 
 // Event Listeners (HOVER)
 buttons.forEach((button) => {
-    button.onmouseover = () => button.style.transform = "scale(1.1)";
+    button.addEventListener("mouseover", () => {
+        button.style.transform = "scale(1.1)";
+    })
     button.addEventListener("mouseout", () => {
         button.style.transform = "scale(1)";
         button.style.background = DEFAULTBUTTONBG;

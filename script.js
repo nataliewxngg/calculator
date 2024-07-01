@@ -7,6 +7,8 @@ const EQUALBUTTONBG = "#57cc99";
 
 let operation = "";
 let result = 0;
+let newOp = "";
+let secondOp = false;
 
 const buttons = document.querySelectorAll("button");
 const numButtons = document.querySelectorAll(".nums");
@@ -14,34 +16,27 @@ const opButtons = document.querySelectorAll(".op");
 const clearButtons = document.querySelectorAll(".clear");
 const equalButton = document.querySelector(".equal");
 
-const calculatorDisplay = document.querySelector("#calculator-display");
+const operationText = document.querySelector("#operation-text");
+const resultText = document.querySelector("#result-text")
 
-// Functions
-function add(x,y) {
-    return parseFloat(x) + parseFloat(y);
-}
-
-function subtract(x,y) {
-    return parseFloat(x) - parseFloat(y);
-}
-
-function multiply(x,y) {
-    return parseFloat(x) * parseFloat(y);
-}
-
-function divide(x,y) {
-    return parseFloat(x) / parseFloat(y);
+const operations = {
+    mod: " % ",
+    divide: " / ", 
+    minus: " - ",
+    add: " + ",
+    multiply: " * ",
+    decimal: "."
 }
 
 function operate(x, y, op) {
     if (op == "+") {
-        return add(x, y);
+        return parseFloat(x) + parseFloat(y);
     } else if (op == "-") {
-        return subtract(x, y);
+        return parseFloat(x) - parseFloat(y);
     } else if (op == "*") {
-        return multiply(x, y);
+        return parseFloat(x) * parseFloat(y);
     } else {
-        return divide(x, y);
+        return parseFloat(x) / parseFloat(y);
     }
 }
 
@@ -70,86 +65,36 @@ equalButton.onmouseover = () => equalButton.style.background = EQUALBUTTONBG;
 // Event Listeners (CLICK)
 buttons.forEach((button) => {
     button.addEventListener("click", function (e) {
-
-        // display operation on calculator display
-        calculatorDisplay.innerHTML = "";
-        const h4 = document.createElement("h4");
-        h4.innerText = operation;
-        calculatorDisplay.appendChild(h4);
-
         if (e.target.id == "all-clear-button") {
-            operation = "";
+            operation = "0";
+            secondOp = false;
+            result = "";
         } else if (e.target.id == "clear-button") {
-            operation = operation.substring(0, operation.length-1);
-        } else if (e.target.id == "mod-button") {
-            operation += " % ";
-        } else if (e.target.id == "divide-button") {
-            operation += " / ";
-        } else if (e.target.id == "7-button") {
-            operation += "7";
-        } else if (e.target.id == "8-button") {
-            operation += "8";
-        } else if (e.target.id == "9-button") {
-            operation += "9";
-        } else if (e.target.id == "add-button") {
-            operation += " + ";
-        } else if (e.target.id == "4-button") {
-            operation += "4";
-        } else if (e.target.id == "5-button") {
-            operation += "5";
-        } else if (e.target.id == "6-button") {
-            operation += "6";
-        } else if (e.target.id == "minus-button") {
-            operation += " - ";
-        } else if (e.target.id == "1-button") {
-            operation += "1";
-        } else if (e.target.id == "2-button") {
-            operation += "2";
-        } else if (e.target.id == "3-button") {
-            operation += "3";
-        } else if (e.target.id == "multiply-button") {
-            operation += " * ";
-        } else if (e.target.id == "0-button") {
-            operation += "0";
-        } else if (e.target.id == "decimal-button") {
-            operation += ".";
-        } else { // equal button
-            operating = operation + " ";
-            
-            let x = operating.substring(0, operating.indexOf(" "));
-            operating = operating.substring(operating.indexOf(" ") + 1);
-            // console.log(x);
-
-            let op = operating.substring(0, operating.indexOf(" "));
-            operating = operating.substring(operating.indexOf(" ") + 1);
-            // console.log(op);
-
-            let y = operating.substring(0, operating.indexOf(" "));
-            operating = operating.substring(operating.indexOf(" ") + 1);
-            // console.log(y);
-
-            result = operate(x, y, op);
-            console.log(result);
-
-            while (operating.length > 2) {
-                x = result;
+            operation = operation.substring(0, operation.lastIndexOf(" "));
+        } else if (e.target.id == "mod-button"||e.target.id == "divide-button"||e.target.id == "minus-button" || e.target.id == "add-button" || e.target.id == "multiply-button" ||e.target.id == "decimal-button") {
+            console.log(e.target.id)
+            if (secondOp) { 
+                result = operate(operation.substring(0,operation.indexOf(' ')), operation.substring(operation.lastIndexOf(' ')+1, operation.length), operation.substring(operation.indexOf(' ')+1, operation.lastIndexOf(' ')));
+                operation = "";
+                newOp = operations[e.target.id.substring(0,e.target.id.indexOf("-"))].trim();
                 
-                op = operating.substring(0, operating.indexOf(" "));
-                operating = operating.substring(operating.indexOf(" ") + 1);
-
-                y = operating.substring(0, operating.indexOf(" "));
-                operating.substring(operating.indexOf(" ") + 1);
-
-                result = operate(x, y, op);
-                console.log(result)
+                console.log(result);
+                console.log(newOp);
+            } else {
+                operation += operations[e.target.id.substring(0,e.target.id.indexOf("-"))];
             }
-
-            const h2 = document.createElement("h2");
-            h2.innerText = result.toString();
-            calculatorDisplay.appendChild(h2);
-
-            // operation = ""
-            operating = ""
+            secondOp = true;
+        } else if (e.target.id == "equal-button") {
+            result = operate(operation, result.substring(0,result.indexOf(' ')), result.substring(result.indexOf(' ')+1,result.lastIndexOf(' ')));
+            
+            operation = "0";
+            operating = "";
+            secondOp = false;
+        } else {
+            operation += e.target.id.substring(0,e.target.id.indexOf('-'));
         }
+        
+        if (operation.trim() == "") operation = "0";
+        operationText.textContent = operation.toString();
     })
 })

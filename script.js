@@ -6,7 +6,7 @@ const CLEARBUTTONBG = "#d62828";
 const EQUALBUTTONBG = "#57cc99";
 
 let operation = "";
-let result = 0;
+let result = "";
 let newOp = "";
 let secondOp = false;
 
@@ -70,18 +70,24 @@ buttons.forEach((button) => {
             secondOp = false;
             result = "";
         } else if (e.target.id == "clear-button") {
-            operation = operation.substring(0, operation.lastIndexOf(" "));
+            if (operation.charAt(operation.length - 1) == ' ') {
+                operation = operation.substring(0, operation.length-2);
+                // console.log("true");
+            } else
+                operation = operation.substring(0, operation.length-1);
         } else if (e.target.id == "mod-button"||e.target.id == "divide-button"||e.target.id == "minus-button" || e.target.id == "add-button" || e.target.id == "multiply-button" ||e.target.id == "decimal-button") {
-            console.log(e.target.id)
+            // console.log(operations[e.target.id.substring(0, e.target.id.indexOf("-"))])
             if (secondOp) { 
-                result = operate(operation.substring(0,operation.indexOf(' ')), operation.substring(operation.lastIndexOf(' ')+1, operation.length), operation.substring(operation.indexOf(' ')+1, operation.lastIndexOf(' ')));
+                result = operate(result, operation.substring(operation.lastIndexOf(' ') + 1, operation.length), newOp);
                 operation = "";
-                newOp = operations[e.target.id.substring(0,e.target.id.indexOf("-"))].trim();
+                newOp = operations[e.target.id.substring(0, e.target.id.indexOf("-"))].trim();
                 
                 console.log(result);
                 console.log(newOp);
             } else {
-                operation += operations[e.target.id.substring(0,e.target.id.indexOf("-"))];
+                result = operation;
+                operation += operations[e.target.id.substring(0, e.target.id.indexOf("-"))];
+                newOp = operations[e.target.id.substring(0, e.target.id.indexOf("-"))].trim();
             }
             secondOp = true;
         } else if (e.target.id == "equal-button") {
@@ -94,7 +100,9 @@ buttons.forEach((button) => {
             operation += e.target.id.substring(0,e.target.id.indexOf('-'));
         }
         
-        if (operation.trim() == "") operation = "0";
+        if (operation.trim() == "") operation = " ";
         operationText.textContent = operation.toString();
+        if (secondOp)
+            resultText.textContent = result.toString();
     })
 })

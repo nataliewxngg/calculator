@@ -1,15 +1,21 @@
-body {
-    background: #5c677d;
-    text-align: center;
-}
-
 * {
     color: white;
     font-family: 'Nunito Sans', sans-serif;
 }
 
+body {
+    background: #5c677d;
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
 a {
     margin: 20px;
+    line-height: 22px;
 
     color: #212529;
     font-weight: 700;
@@ -21,13 +27,13 @@ a {
     align-items: center;
     gap: 5px;
 
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
-a:hover { font-size: 21px; }
+a:hover { font-size: 22px; }
 
 a img {
-    width: 25px;
+    width: 30px;
     height: auto;
 }
 
@@ -37,8 +43,6 @@ a img {
     width: 280px;
     height: 450px;
 
-    margin: 10% auto 10px auto;
-
     padding: 5px 20px;
 
     border-radius: 10px;
@@ -47,7 +51,6 @@ a img {
 
 #calculator-display {
     background: #343a40;
-    text-align: right;
 
     height: 60px;
     width: 250px;
@@ -56,16 +59,16 @@ a img {
     border-radius: inherit;
 }
 
-#calculator-display * {
-    margin: 0;
-}
+#calculator-display * { margin: 0; }
 
 #calculator-display h4 {
-    padding: 5px 5px 0 0;
+    padding: 5px 0 0 5px;
+    text-align: left;
 }
 
 #calculator-display h2 {
     padding: 0 5px 0 0;
+    text-align: right;
 }
 
 button {
@@ -80,9 +83,7 @@ button {
     transition: 0.3s;
 }
 
-#equal-button {
-    width: 123px;
-}
+#equal-button { width: 123px; }
 
 .button-rows {
     display: flex;

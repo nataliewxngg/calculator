@@ -11,6 +11,7 @@ let newOp = true;
 
 let nums = [];
 let operators = [];
+let modifyOperation = true;
 
 const buttons = document.querySelectorAll("button");
 const numButtons = document.querySelectorAll(".nums");
@@ -37,8 +38,8 @@ equalButton.onmouseover = () => equalButton.style.background = EQUALBUTTONBG;
 
 buttons.forEach((button) => {
     button.addEventListener("click", function (e) {
-        let modifyOperation = true;
         if (e.target.id == "all-clear-button") {
+            modifyOperation = true;
             operation = "";
             result = "";
             nums = [];
@@ -46,6 +47,7 @@ buttons.forEach((button) => {
             newOp = true;
 
         } else if (e.target.id == "clear-button") {
+            modifyOperation = true;
             if (newOp) {
                 newOp = false;
                 operators.pop();
@@ -60,26 +62,29 @@ buttons.forEach((button) => {
                 } else newOp = true;
             } 
         } else if (e.target.id == "%-button" || e.target.id == "/-button" || e.target.id == "--button" || e.target.id == "+-button" || e.target.id == "*-button") {
+            modifyOperation = true;
             if (newOp) operators.pop();
             operators.push(e.target.id.substring(0, 1));
             newOp = true;
-        } else if (e.target.id == "equal-button") {
-            if (!(nums.length - 1 == operators.length)) 
-                result = 'MATH ERROR';
-
-            result = 0;
-            modifyOperation = false;
-            for (let operator of operators) {
-                if (operator == "+") result = Number(nums[0]) + Number(nums[1]);
-                else if (operator == "-") result = Number(nums[0]) - Number(nums[1]);
-                else if (operator == "*") result = Number(nums[0]) * Number(nums[1]);
-                else if (operator == "/") result = Number(nums[0]) / Number(nums[1]);
-                else if (operator == "%") result = Number(nums[0]) % Number(nums[1]);
-                
-                nums.splice(0, 1);
-                nums[0] = result;
+            
+            // calculate first 2 numbers if available
+            if (nums.length > 1) {
+                calculate();
+                operators.splice(0, 1);
             }
+        } else if (e.target.id == "equal-button") {
+            if (nums.length == operators.length && modifyOperation) {
+                nums.push(Number(result));
+                operation += ` ${result} `
+            }
+
+            if (modifyOperation) {
+                calculate();
+                newOp = true;
+            }
+            modifyOperation = false;
         } else {
+            modifyOperation = true;
             newOp
                 ? nums.push(e.target.id.substring(0, e.target.id.indexOf('-')))
                 : nums[nums.length-1] = nums[nums.length - 1] += e.target.id.substring(0, e.target.id.indexOf('-')); 
@@ -90,7 +95,6 @@ buttons.forEach((button) => {
         console.log(`numbers: [${nums}]`);
 
         // display operation and results on webpage
-        
         if (modifyOperation) {
             operation = "";
             let index = 0;
@@ -102,10 +106,21 @@ buttons.forEach((button) => {
                 }
             }
         }
-
         if (operation.trim() == "") operation = "0"; 
         operationText.textContent = operation;
-
         resultText.textContent = result; 
     });
 });
+
+function calculate() {
+    result = 0;
+
+    if (operators[0] == "+") result = Number(nums[0]) + Number(nums[1]);
+    else if (operators[0] == "-") result = Number(nums[0]) - Number(nums[1]);
+    else if (operators[0] == "*") result = Number(nums[0]) * Number(nums[1]);
+    else if (operators[0] == "/") result = Number(nums[0]) / Number(nums[1]);
+    else if (operators[0] == "%") result = Number(nums[0]) % Number(nums[1]);
+
+    nums.splice(0, 1);
+    nums[0] = result;
+}

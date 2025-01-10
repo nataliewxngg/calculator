@@ -87,8 +87,20 @@ buttons.forEach((button) => {
         console.log(`operators: [${operators}]`);
         console.log(`numbers: [${nums}]`);
 
+        // display operation and results on webpage
+        operation = "";
+        let index = 0;
+        for (let num of nums) {
+            operation += num.toString();
+            if (operators.length > index) {
+                operation += ` ${operators[index]} `;
+                ++index;
+            }
+        }
+
         if (operation.trim() == "") operation = "0"; 
         operationText.textContent = operation;
+
         resultText.textContent = result; 
     });
 });

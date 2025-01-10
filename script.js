@@ -40,16 +40,30 @@ buttons.forEach((button) => {
         if (e.target.id == "all-clear-button") {
             operation = "0";
             result = "";
+            nums = operators = [];
+            newOp = true;
+
         } else if (e.target.id == "clear-button") {
+            if (newOp) {
+                newOp = false;
+                operators.pop();
+            }
+            else {
+                if (nums.length > 0) {
+                    nums[nums.length - 1] = Number(nums[nums.length - 1].toString().substring(0, nums[nums.length - 1].toString().length - 1))
+                    if (nums[nums.length - 1] == 0) {
+                        nums.pop();
+                        newOp = true;
+                    }
+                }
+            } 
 
+            console.log(`operators: ${operators}`);
+            console.log(`numbers:   ${nums}`);
 
-            if (operation.charAt(operation.length - 1) == ' ')
-                operation = operation.substring(0, operation.length - 2);
-            else
-                operation = operation.substring(0, operation.length - 1);
-
-        } else if (e.target.id == "mod-button" || e.target.id == "divide-button" || e.target.id == "minus-button" || e.target.id == "add-button" || e.target.id == "multiply-button") {
-            operators.push(e.target.id.substring(0, e.target.id.indexOf('-')));
+        } else if (e.target.id == "%-button" || e.target.id == "/-button" || e.target.id == "--button" || e.target.id == "+-button" || e.target.id == "*-button") {
+            if (newOp) operators.pop();
+            operators.push(e.target.id.substring(0, 1));
             newOp = true;
             console.log(operators);
         } else if (e.target.id == "equal-button") {
@@ -80,9 +94,9 @@ buttons.forEach((button) => {
             newOp = false;
             console.log(nums);
         }
-        
+
         if (operation.trim() == "") operation = "0"; 
-        operationText.textContent = operation.toString();
+        operationText.textContent = operation;
 
         console.log(result);
         resultText.textContent = result; 

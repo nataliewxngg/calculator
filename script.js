@@ -12,6 +12,8 @@ let operators = [];
 let newOp = true;
 let modifyOperation = true;
 
+const body = document.querySelector("body");
+
 const buttons = document.querySelectorAll("button");
 const numButtons = document.querySelectorAll(".nums");
 const opButtons = document.querySelectorAll(".op");
@@ -36,7 +38,7 @@ clearButtons.forEach(clearButton => clearButton.onmouseover = () => clearButton.
 equalButton.onmouseover = () => equalButton.style.background = EQUALBUTTONBG;
 
 buttons.forEach((button) => {
-    button.addEventListener("click", function (e) {
+    button.addEventListener("click", e => {
         if (e.target.id == "all-clear-button") {
             // reset variable values
             operation = result = "";
@@ -120,6 +122,13 @@ buttons.forEach((button) => {
         operationText.textContent = operation;
         resultText.textContent = result; 
     });
+});
+
+body.addEventListener("keydown", e => {
+    if ((e.key >= 0 && e.key <= 9) || e.key == "%" || e.key == "/" || e.key == "+" || e.key == "-" || e.key == "*" || e.key == ".") document.getElementById(`${e.key}-button`).click();
+    else if (e.ctrlKey && e.key == "Backspace") document.getElementById("all-clear-button").click();
+    else if (e.key == "Backspace") document.getElementById("clear-button").click();
+    else if (e.key == "Enter") document.getElementById("equal-button").click();
 });
 
 // FUNCTIONS

@@ -56,13 +56,12 @@ buttons.forEach((button) => {
                         nums.pop();
                         newOp = true;
                     }
-                }
+                } else newOp = true;
             } 
         } else if (e.target.id == "%-button" || e.target.id == "/-button" || e.target.id == "--button" || e.target.id == "+-button" || e.target.id == "*-button") {
             if (newOp) operators.pop();
             operators.push(e.target.id.substring(0, 1));
             newOp = true;
-            console.log(operators);
         } else if (e.target.id == "equal-button") {
             if (!(nums.length - 1 == operators.length)) 
                 result = 'MATH ERROR';
@@ -83,7 +82,6 @@ buttons.forEach((button) => {
                 ? nums.push(e.target.id.substring(0, e.target.id.indexOf('-')))
                 : nums[nums.length-1] = nums[nums.length - 1] += e.target.id.substring(0, e.target.id.indexOf('-')); 
             newOp = false;
-            console.log(nums);
         }
 
         console.log(`operators: [${operators}]`);
@@ -91,8 +89,6 @@ buttons.forEach((button) => {
 
         if (operation.trim() == "") operation = "0"; 
         operationText.textContent = operation;
-
-        console.log(result);
         resultText.textContent = result; 
     });
 });

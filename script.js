@@ -37,6 +37,7 @@ equalButton.onmouseover = () => equalButton.style.background = EQUALBUTTONBG;
 
 buttons.forEach((button) => {
     button.addEventListener("click", function (e) {
+        let modifyOperation = true;
         if (e.target.id == "all-clear-button") {
             operation = "";
             result = "";
@@ -67,6 +68,7 @@ buttons.forEach((button) => {
                 result = 'MATH ERROR';
 
             result = 0;
+            modifyOperation = false;
             for (let operator of operators) {
                 if (operator == "+") result = Number(nums[0]) + Number(nums[1]);
                 else if (operator == "-") result = Number(nums[0]) - Number(nums[1]);
@@ -88,13 +90,16 @@ buttons.forEach((button) => {
         console.log(`numbers: [${nums}]`);
 
         // display operation and results on webpage
-        operation = "";
-        let index = 0;
-        for (let num of nums) {
-            operation += num.toString();
-            if (operators.length > index) {
-                operation += ` ${operators[index]} `;
-                ++index;
+        
+        if (modifyOperation) {
+            operation = "";
+            let index = 0;
+            for (let num of nums) {
+                operation += num.toString();
+                if (operators.length > index) {
+                    operation += ` ${operators[index]} `;
+                    ++index;
+                }
             }
         }
 

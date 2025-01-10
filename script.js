@@ -62,18 +62,21 @@ buttons.forEach((button) => {
                 } else newOp = true;
             } 
         } else if (e.target.id == "%-button" || e.target.id == "/-button" || e.target.id == "--button" || e.target.id == "+-button" || e.target.id == "*-button") {
-            modifyOperation = true;
-            if (newOp) operators.pop();
-            operators.push(e.target.id.substring(0, 1));
-            newOp = true;
-            
-            // calculate first 2 numbers if available
-            if (nums.length > 1) {
-                calculate();
-                operators.splice(0, 1);
+            if (nums.length > 0) {
+                modifyOperation = true;
+                if (newOp) operators.pop();
+                operators.push(e.target.id.substring(0, 1));
+                newOp = true;
+                
+                // calculate first 2 numbers if available
+                if (nums.length > 1) {
+                    calculate();
+                    operators.splice(0, 1);
+                }
             }
         } else if (e.target.id == "equal-button") {
             if (nums.length == operators.length && modifyOperation) {
+                if (result == "") result = 0;
                 nums.push(Number(result));
                 operation += ` ${result} `
             }

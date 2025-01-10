@@ -73,6 +73,11 @@ buttons.forEach((button) => {
                     calculate();
                     operators.splice(0, 1);
                 }
+            } else {
+                if (e.target.id == "--button") {
+                    nums.push(e.target.id.substring(0, 1));
+                    newOp = false;
+                }
             }
         } else if (e.target.id == "equal-button") {
             if (nums.length == operators.length && modifyOperation) {

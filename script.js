@@ -38,9 +38,10 @@ equalButton.onmouseover = () => equalButton.style.background = EQUALBUTTONBG;
 buttons.forEach((button) => {
     button.addEventListener("click", function (e) {
         if (e.target.id == "all-clear-button") {
-            operation = "0";
+            operation = "";
             result = "";
-            nums = operators = [];
+            nums = [];
+            operators = [];
             newOp = true;
 
         } else if (e.target.id == "clear-button") {
@@ -57,10 +58,6 @@ buttons.forEach((button) => {
                     }
                 }
             } 
-
-            console.log(`operators: ${operators}`);
-            console.log(`numbers:   ${nums}`);
-
         } else if (e.target.id == "%-button" || e.target.id == "/-button" || e.target.id == "--button" || e.target.id == "+-button" || e.target.id == "*-button") {
             if (newOp) operators.pop();
             operators.push(e.target.id.substring(0, 1));
@@ -72,17 +69,11 @@ buttons.forEach((button) => {
 
             result = 0;
             for (let operator of operators) {
-                console.log(Number(nums[0]));
-                console.log(Number(nums[1]));
-
-                if (operator == "add") 
-                    result = Number(nums[0]) + Number(nums[1]);
-                else if (operator == "minus") 
-                    result = Number(nums[0]) - Number(nums[1]);
-                else if (operator == "multiply")
-                    result = Number(nums[0]) * Number(nums[1]);
-                else  
-                    result = Number(nums[0]) / Number(nums[1]);
+                if (operator == "+") result = Number(nums[0]) + Number(nums[1]);
+                else if (operator == "-") result = Number(nums[0]) - Number(nums[1]);
+                else if (operator == "*") result = Number(nums[0]) * Number(nums[1]);
+                else if (operator == "/") result = Number(nums[0]) / Number(nums[1]);
+                else if (operator == "%") result = Number(nums[0]) % Number(nums[1]);
                 
                 nums.splice(0, 1);
                 nums[0] = result;
@@ -94,6 +85,9 @@ buttons.forEach((button) => {
             newOp = false;
             console.log(nums);
         }
+
+        console.log(`operators: [${operators}]`);
+        console.log(`numbers: [${nums}]`);
 
         if (operation.trim() == "") operation = "0"; 
         operationText.textContent = operation;
